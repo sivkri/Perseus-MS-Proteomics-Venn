@@ -3,7 +3,7 @@
 This analysis will provide the steps to prepare the venn diagram of up and down regulated proteins obtained from Mass spectrometry Perseus.
 
 
-# Repository Name
+# Perseus-MS-Proteomics-Venn
 
 This repository contains a script that performs data analysis using the pandas and matplotlib libraries in Python. The script reads data from Excel files, filters and processes the data based on specific conditions, performs overlap analysis, and generates Venn diagrams. The resulting data and visualizations are saved to Excel files.
 
