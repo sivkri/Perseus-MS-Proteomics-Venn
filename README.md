@@ -5,12 +5,13 @@ This analysis will provide the steps to prepare the venn diagram of up and down 
 
 # Repository Name
 
-This repository contains code for performing data analysis and visualization using pandas and matplotlib libraries. The code processes data from different Excel files, applies filtering and merging operations, and generates venn diagrams based on the results.
+This repository contains a script that performs data analysis using the pandas and matplotlib libraries in Python. The script reads data from Excel files, filters and processes the data based on specific conditions, performs overlap analysis, and generates Venn diagrams. The resulting data and visualizations are saved to Excel files.
 
-## Installation
+## Prerequisites
 
 To use this code, you need to have Python installed. Additionally, you need to install the following dependencies:
 
+- Python (version 3.6 or above)
 - pandas
 - matplotlib
 - matplotlib_venn
@@ -76,6 +77,22 @@ ko_t_down = ko_t[ko_t["Student's T-test Difference HuRKO-DMSO_HuRKO-E20"] > 1.0]
 10. Perform overlap analysis and generate venn diagrams:
 
 ```python
-UP_MERGED = pd.merge(ko
+UP_MERGED = pd.merge(ko_up, ko_t_up, on='Gene Symbol', how='inner')
+DOWN_MERGED = pd.merge(ko_down, ko_t_down, on='Gene Symbol', how='inner')
 
-.
+# Get the overlapping genes
+up_overlap = len(UP_MERGED)
+down_overlap = len(DOWN_MERGED)
+both_overlap = len(UP_MERGED.merge(DOWN_MERGED, on='Gene Symbol'))
+
+# Generate venn diagram
+venn_labels = {'10': up_overlap - both_overlap, '01': down_overlap - both_overlap, '11': both_overlap}
+venn_diagram = venn3(subsets=venn_labels, set_labels=('WT-E20', 'HuRKO-DMSO', 'HuRKO-E20'))
+venn_circles = venn3_circles(subsets=venn_labels, linestyle='dashed')
+
+# Display the venn diagram
+plt.title('Overlap of Differentially Expressed Genes')
+plt.show()
+```
+
+Make sure you have the UP_MERGED and DOWN_MERGED DataFrames correctly generated based on the filtering steps mentioned earlier.
